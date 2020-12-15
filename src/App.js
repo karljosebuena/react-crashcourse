@@ -7,22 +7,22 @@ class App extends Component {
       {
         id: 1,
         title: 'Take out the trash',
-        completd: false
+        completed: true
       },
       {
         id: 2,
         title: 'Dinner with wife',
-        completd: false
+        completed: false
       },
       {
         id: 3,
         title: 'Band Practice',
-        completd: false
+        completed: false
       },
       {
         id: 4,
         title: 'Basketball drills/workout',
-        completd: false
+        completed: false
       }
     ]
   }
