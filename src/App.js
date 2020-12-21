@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Header from './components/layout/Header'
 import Todos from './components/Todos';
 
 class App extends Component {
@@ -38,10 +39,23 @@ class App extends Component {
       })
     })
   }
+
+  // Delete todo itiem
+  delTodo = (todoId) => {
+    this.setState({
+      todos: [...this.state.todos].filter(todo => todo.id !== todoId)
+    });
+  }
+
   render() {
     return (
       <div className="App">
-        <Todos todos={this.state.todos} markComplete={this.markComplete} />
+        <Header />
+        <Todos
+          todos={this.state.todos}
+          markComplete={this.markComplete}
+          delTodo={this.delTodo}
+        />
       </div>
     )
   }
