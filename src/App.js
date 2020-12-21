@@ -7,22 +7,22 @@ class App extends Component {
   state = {
     todos: [
       {
-        id: 1,
+        id: 0,
         title: 'Take out the trash',
         completed: true
       },
       {
-        id: 2,
+        id: 1,
         title: 'Dinner with wife',
         completed: false
       },
       {
-        id: 3,
+        id: 2,
         title: 'Band Practice',
         completed: false
       },
       {
-        id: 4,
+        id: 3,
         title: 'Basketball drills/workout',
         completed: false
       }
@@ -48,12 +48,22 @@ class App extends Component {
     });
   }
 
+  // Add Todo
+  addTodo = (title) => {
+    const newTodo = {
+      id: this.state.todos.length,
+      title,
+      completed: false
+    }
+    this.setState({ todos: [...this.state.todos, newTodo] })
+  }
+
   render() {
     return (
       <div className="App">
         <div className="container">
           <Header />
-          <AddTodo />
+          <AddTodo addTodo={this.addTodo} />
           <Todos
             todos={this.state.todos}
             markComplete={this.markComplete}
