@@ -1,3 +1,20 @@
 body {
   font-family: Helvetica, Arial, Sans-Serif;
 }
+
+.container {
+  padding: 0 1rem;
+}
+
+.btn {
+  display: inline-block;
+  border: none;
+  background: #555;
+  color: #ffffff;
+  padding: 7px 20px;
+  cursor: pointer;
+}
+
+.bnt:hover {
+  background: #666;
+}
