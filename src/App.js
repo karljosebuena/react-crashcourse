@@ -50,6 +50,13 @@ class App extends Component {
         title,
         completed: false
       })
+      // check if returned id/key exists already
+      const idExists  = this.state.todos.find(todo => todo.id === newTodo.data.id);
+      if (idExists) {
+        // sort item by id and get max id to genrate new id
+        const [maxItem] = this.state.todos.sort((a, b) => b.id - a.id);
+        newTodo.data.id  = maxItem.id + 1;
+      }
       this.setState({ todos: [...this.state.todos, newTodo.data] })
     } catch (error) {
       console.log(error)
