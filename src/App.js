@@ -6,14 +6,17 @@ import Header from './components/layout/Header'
 import Todos from './components/Todos';
 import AddTodo from './components/AddTodo';
 import About from './components/pages/About'
-import { v4 as uuidV4 } from 'uuid';
+// import { v4 as uuidV4 } from 'uuid';
 
 import './App.css';
 
 class App extends Component {
+
   state = {
     todos: []
   }
+
+  jsonPlaceHolderUri = 'https://jsonplaceholder.typicode.com/todos';
 
   // Toggle todo item
   markComplete = (todoId) => {
@@ -28,25 +31,34 @@ class App extends Component {
   }
 
   // Delete todo itiem
-  delTodo = (todoId) => {
-    this.setState({
-      todos: [...this.state.todos].filter(todo => todo.id !== todoId)
-    });
+  delTodo = async (todoId) => {
+    try {
+      const deleteTodo = await axios.delete(`${this.jsonPlaceHolderUri}/${todoId}`);
+      console.info(`Todo ${todoId} delete response: ${deleteTodo.status}`);
+      this.setState({
+        todos: [...this.state.todos].filter(todo => todo.id !== todoId)
+      });
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   // Add Todo
-  addTodo = (title) => {
-    const newTodo = {
-      id: uuidV4(),
-      title,
-      completed: false
+  addTodo = async (title) => {
+    try {
+      const newTodo = await axios.post(this.jsonPlaceHolderUri, {
+        title,
+        completed: false
+      })
+      this.setState({ todos: [...this.state.todos, newTodo.data] })
+    } catch (error) {
+      console.log(error)
     }
-    this.setState({ todos: [...this.state.todos, newTodo] })
   }
 
   async componentDidMount() {
     try {
-      const todos = await axios.get('https://jsonplaceholder.typicode.com/todos?_limit=10');
+      const todos = await axios.get(`${this.jsonPlaceHolderUri}?_limit=10`);
       this.setState({ todos: todos.data });
     } catch (error) {
       console.log(error);
