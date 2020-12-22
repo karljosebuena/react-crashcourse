@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
+import axios from 'axios';
 
 import Header from './components/layout/Header'
 import Todos from './components/Todos';
@@ -11,28 +12,7 @@ import './App.css';
 
 class App extends Component {
   state = {
-    todos: [
-      {
-        id: uuidV4(),
-        title: 'Take out the trash',
-        completed: true
-      },
-      {
-        id: uuidV4(),
-        title: 'Dinner with wife',
-        completed: false
-      },
-      {
-        id: uuidV4(),
-        title: 'Band Practice',
-        completed: false
-      },
-      {
-        id: uuidV4(),
-        title: 'Basketball drills/workout',
-        completed: false
-      }
-    ]
+    todos: []
   }
 
   // Toggle todo item
@@ -62,6 +42,15 @@ class App extends Component {
       completed: false
     }
     this.setState({ todos: [...this.state.todos, newTodo] })
+  }
+
+  async componentDidMount() {
+    try {
+      const todos = await axios.get('https://jsonplaceholder.typicode.com/todos?_limit=10');
+      this.setState({ todos: todos.data });
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   render() {
